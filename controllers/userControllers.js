@@ -45,7 +45,6 @@ export const postLogin = passport.authenticate("local", {
 
 export const githubLogin = passport.authenticate('github');
 export const githubLoginCallback = async (accessToken, refreshToken, profile, cb) => {
-    console.log(accessToken, refreshToken, profile, cb);
     const { _json: {
         id,
         avatar_url,
@@ -71,8 +70,6 @@ export const githubLoginCallback = async (accessToken, refreshToken, profile, cb
             avatarUrl: avatar_url,
         });
         return cb(null, newUser);
-    
-        console.log(user);
     } catch (error) {
         return cb(error);
     }
@@ -113,7 +110,6 @@ export const facebookLoginCallback = async (accessToken, refreshToken, profile, 
         return cb(error)
     }
 
-    console.log(accessToken, refreshToken, profile, cb);
 }
 
 export const postFacebookLogin = (req, res) => {
@@ -137,7 +133,8 @@ export const userDetail = async (req, res) => {
         id
     }} = req;
     try {
-        const user = await User.findById(id);
+        const user = await User.findById(id).populate('videos');
+        console.log(user);
         res.render("userDetail", {pageTitle: "UserDetail", user});
     } catch (error) {
         res.redirect(routes.home);
@@ -152,7 +149,6 @@ export const postEditProfile = async (req, res) => {
         body: { name, email },
         file,
     } = req;
-    console.log(name, email, file)
     try {
         await User.findByIdAndUpdate(req.user.id, {
             name,
