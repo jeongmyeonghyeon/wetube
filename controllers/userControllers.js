@@ -82,6 +82,44 @@ export const postGitHubLogin = (req, res) => {
     res.redirect(routes.home);
 }
 
+export const facebookLogin = passport.authenticate('facebook');
+
+export const facebookLoginCallback = async (accessToken, refreshToken, profile, cb) => {
+    const { _json: {
+        id,
+        name,
+        email,
+    }} = profile;
+
+    try {
+        const user = await User.findOne({
+            email
+        });
+
+        if (user) {
+           user.facebookId = id;
+           user.avatarUrl = `https://graph.facebook.com/${id}/picture?type=large`;
+           user.save();
+           return cb(null, user);
+        }
+
+        const newUser = await User.create({
+            email,
+            name,
+            githubId: id,
+            avatarUrl: `https://graph.facebook.com/${id}/picture?type=large`,
+        });
+    } catch (error) {
+        return cb(error)
+    }
+
+    console.log(accessToken, refreshToken, profile, cb);
+}
+
+export const postFacebookLogin = (req, res) => {
+    res.redirect(routes.home);
+}
+
 export const logout = (req, res) => {
     req.logout();
     // To Do: Process Log Out
@@ -89,6 +127,22 @@ export const logout = (req, res) => {
 }
 
 export const users = (req, res) => res.render("users", {pageTitle: "Users"});
-export const userDetail = (req, res) => res.render("userDetail", {pageTitle: "UserDetail"});
+
+export const getMe = (req, res) => {
+    res.render("userDetail", {pageTitle: "UserDetail", user: req.user});
+}
+
+export const userDetail = async (req, res) => {
+    const { params: {
+        id
+    }} = req;
+    try {
+        console.log("들어오긴하니??");
+        const user = await User.findById(id);
+        res.render("userDetail", {pageTitle: "UserDetail", user});
+    } catch (error) {
+        res.redirect(routes.home);
+    }
+}
 export const editProfile = (req, res) => res.render("editProfile", {pageTitle: "EditProfile"});
 export const changePassword = (req, res) => res.render("changePassword", {pageTitle: "ChangePassword"});
