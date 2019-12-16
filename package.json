@@ -6,6 +6,7 @@
   "author": "jngmnghn",
   "license": "ISC",
   "dependencies": {
+    "@babel/cli": "^7.7.5",
     "@babel/core": "^7.7.5",
     "@babel/node": "^7.7.4",
     "@babel/polyfill": "^7.7.0",
