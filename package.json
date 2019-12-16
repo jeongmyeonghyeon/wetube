@@ -57,7 +57,6 @@
     "prestart": "npm run build"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
     "@babel/preset-env": "^7.7.5",
     "nodemon": "^2.0.1"
   }
