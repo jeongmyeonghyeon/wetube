@@ -13,9 +13,9 @@ mongoose.connect(
 );
 
 const db = mongoose.connection;
-console.log('process.env.MONGO_URL_NEW', process.env.MONGO_URL_NEW);
+
 const handelOpen = () => console.log('[O] Connected to DB');
-const handleError = (error) => console.log(`${process.env.MONGO_URL_NEW}[X] Error on DB Connection ${error}`);
+const handleError = (error) => console.log(`${typeof process.env.MONGO_URL_NEW}[X] Error on DB Connection ${error}`);
 
 db.once('open', handelOpen);
 db.on('error', handleError);
