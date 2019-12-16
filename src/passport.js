@@ -8,23 +8,19 @@ import { githubLoginCallback, facebookLoginCallback } from './controllers/userCo
 passport.use(User.createStrategy());
 
 passport.use(new GithubStrategy({
-        clientID: process.env.GITHUB_ID,
-        clientSecret: process.env.GITHUB_SECRET,
-        callbackURL: process.env.PRODUCT ? `${process.env.PROD_URL}${routes.gitHubCallback}` : `${process.env.LOCAL_URL}${routes.gitHubCallback}`,
-    },
-    githubLoginCallback
-    )
-);
+  clientID: process.env.GITHUB_ID,
+  clientSecret: process.env.GITHUB_SECRET,
+  callbackURL: `https://vast-forest-60946.herokuapp.com${routes.gitHubCallback}`,
+},
+githubLoginCallback,),);
 passport.use(new FacebookStrategy({
-        clientID: process.env.FACEBOOK_APP_ID,
-        clientSecret: process.env.FACEBOOK_APP_SECRET,
-        callbackURL: `https://c2226cda.ngrok.io${routes.facebookCallback}`,
-        profileFields: ['id', 'displayName', 'photos', 'email'],
-        scope: ['public_profile', 'email'],
-    },
-    facebookLoginCallback,
-    )
-)
+  clientID: process.env.FACEBOOK_APP_ID,
+  clientSecret: process.env.FACEBOOK_APP_SECRET,
+  callbackURL: `https://c2226cda.ngrok.io${routes.facebookCallback}`,
+  profileFields: ['id', 'displayName', 'photos', 'email'],
+  scope: ['public_profile', 'email'],
+},
+facebookLoginCallback,),);
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
