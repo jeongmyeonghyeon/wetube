@@ -10,7 +10,7 @@ passport.use(User.createStrategy());
 passport.use(new GithubStrategy({
         clientID: process.env.GITHUB_ID,
         clientSecret: process.env.GITHUB_SECRET,
-        callbackURL: `http://localhost:4000${routes.gitHubCallback}`,
+        callbackURL: process.env.PRODUCT ? `${process.env.PROD_URL}${routes.gitHubCallback}` : `${process.env.LOCAL_URL}${routes.gitHubCallback}`,
     },
     githubLoginCallback
     )
