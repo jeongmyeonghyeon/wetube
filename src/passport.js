@@ -12,7 +12,7 @@ passport.use(new GithubStrategy({
   clientSecret: process.env.GITHUB_SECRET,
   callbackURL: `https://vast-forest-60946.herokuapp.com${routes.gitHubCallback}`,
 },
-githubLoginCallback,),);
+githubLoginCallback));
 passport.use(new FacebookStrategy({
   clientID: process.env.FACEBOOK_APP_ID,
   clientSecret: process.env.FACEBOOK_APP_SECRET,
@@ -20,7 +20,7 @@ passport.use(new FacebookStrategy({
   profileFields: ['id', 'displayName', 'photos', 'email'],
   scope: ['public_profile', 'email'],
 },
-facebookLoginCallback,),);
+facebookLoginCallback));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
