@@ -56,7 +56,7 @@
     "prebuild": "rm -rf build",
     "start": "PRODUCTION=true node build/init.js",
     "prestart": "npm run build",
-    "foo": "fooo"
+    "foo": "foo"
   },
   "devDependencies": {
     "nodemon": "^2.0.1"
