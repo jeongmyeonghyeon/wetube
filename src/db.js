@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 mongoose.connect(
-  process.env.MONGO_URL_NEW,
+  'mongodb+srv://jngmnghn:nomadwetube@cluster0-ysiqz.mongodb.net/test?retryWrites=true&w=majority',
   {
     useNewUrlParser: true,
     useFindAndModify: false,
