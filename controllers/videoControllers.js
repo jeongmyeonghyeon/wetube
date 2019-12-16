@@ -1,6 +1,7 @@
 import routes from '../routes';
 import Video from '../models/Video';
 import Comment from '../models/Comment';
+import { ObjectId } from 'mongodb';
 
 export const home = async (req, res) => {
     try {
@@ -37,11 +38,11 @@ export const getUpload = (req, res) => {
 export const postUpload = async (req, res) => {
     const { 
         body: { title, description }, 
-        file: { path } 
+        file: { location } 
     } = req;
     // To Do: Upload and save video
     const newVideo = await Video.create({
-        fileUrl: path,
+        fileUrl: location,
         title,
         description,
         creator: req.user.id,
@@ -70,12 +71,13 @@ export const getEditVideo = async (req, res) => {
     } = req;
     try {
         const video = await Video.findById(id);
-        if ( video.creator !== req.user.id ) {
+        if ( video.creator != req.user.id ) {
             throw Error();
         } else {
             res.render("editVideo", {pageTitle: `Edit ${video.title}`, video});
         }
     } catch (error) {
+        console.log(error);
         res.redirect(routes.home);
     }
 }
@@ -100,11 +102,9 @@ export const deleteVideo = async (req, res) => {
     } = req;
 
     try {
-        if ( video.creator !== req.user.id ) {
-            throw Error();
-        } else {
-            await Video.findOneAndRemove({_id: id});
-        }
+        
+        await Video.findOneAndRemove({_id: id});
+        
     } catch (error) {
         console.log(error);
     }
