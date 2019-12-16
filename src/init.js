@@ -1,5 +1,8 @@
-import "@babel/polyfill";
+import '@babel/polyfill';
 import dotenv from 'dotenv';
+
+dotenv.config();
+
 import './db';
 import app from './app';
 
@@ -7,7 +10,6 @@ import './models/Video';
 import './models/Comment';
 import './models/User';
 
-dotenv.config();
 
 const PORT = process.env.PORT || 4000;
 
