@@ -13,8 +13,8 @@ mongoose.connect(
 
 const db = mongoose.connection;
 
-const handelOpen = () => console.log('[O] Connected to DB');
-const handleError = (error) => console.log(`[X] Error on DB Connection ${error}`);
+const handleOpen = () => console.log('✅  Connected to DB');
+const handleError = (error) => console.log(`❌ Error on DB Connection:${error}`);
 
-db.once('open', handelOpen);
+db.once('open', handleOpen);
 db.on('error', handleError);
